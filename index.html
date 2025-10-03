@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Kolam Design Studio - Smart India Hackathon</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <h1>Kolam Design Studio</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Discover the Mathematical Beauty of Kolam</h2>
+                <p>Create, analyze, and explore traditional Indian Kolam patterns with AI-powered tools</p>
+                <button class="cta-button" onclick="startDesigning()">
+                    <i class="fas fa-paint-brush"></i>
+                    Start Designing
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="kolam-preview" id="heroKolam"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Studio -->
+    <section id="studio" class="studio hidden">
+        <div class="studio-container">
+            <!-- Left Panel - Tools -->
+            <div class="left-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-tools"></i> Design Tools</h3>
+                </div>
+                
+                <!-- Pattern Generation -->
+                <div class="tool-section">
+                    <h4><i class="fas fa-magic"></i> AI Generation</h4>
+                    <div class="form-group">
+                        <label>Style:</label>
+                        <select id="styleSelect" class="form-control">
+                            <option value="traditional">Traditional</option>
+                            <option value="modern">Modern</option>
+                            <option value="geometric">Geometric</option>
+                            <option value="floral">Floral</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Complexity: <span id="complexityValue">5</span></label>
+                        <input type="range" id="complexitySlider" min="1" max="10" value="5" class="slider">
+                    </div>
+                    <button class="tool-button primary" onclick="generateAIKolam()">
+                        <i class="fas fa-sparkles"></i> Generate AI Kolam
+                    </button>
+                </div>
+
+                <!-- Manual Tools -->
+                <div class="tool-section">
+                    <h4><i class="fas fa-pencil-alt"></i> Manual Design</h4>
+                    <div class="tool-grid">
+                        <button class="tool-button" onclick="addPattern('dots')" title="Add Dots">
+                            <i class="fas fa-circle"></i>
+                        </button>
+                        <button class="tool-button" onclick="addPattern('flower')" title="Flower Pattern">
+                            <i class="fas fa-flower"></i>
+                        </button>
+                        <button class="tool-button" onclick="addPattern('star')" title="Star Pattern">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        <button class="tool-button" onclick="addPattern('spiral')" title="Spiral Pattern">
+                            <i class="fas fa-hurricane"></i>
+                        </button>
+                        <button class="tool-button" onclick="addPattern('mandala')" title="Mandala Pattern">
+                            <i class="fas fa-dharmachakra"></i>
+                        </button>
+                        <button class="tool-button" onclick="addPattern('geometric')" title="Geometric Pattern">
+                            <i class="fas fa-shapes"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Colors -->
+                <div class="tool-section">
+                    <h4><i class="fas fa-palette"></i> Colors</h4>
+                    <div class="color-palette">
+                        <div class="color-option active" data-color="#FF6B35" style="background: #FF6B35;"></div>
+                        <div class="color-option" data-color="#F7931E" style="background: #F7931E;"></div>
+                        <div class="color-option" data-color="#FFD23F" style="background: #FFD23F;"></div>
+                        <div class="color-option" data-color="#06FFA5" style="background: #06FFA5;"></div>
+                        <div class="color-option" data-color="#118AB2" style="background: #118AB2;"></div>
+                        <div class="color-option" data-color="#073B4C" style="background: #073B4C;"></div>
+                        <div class="color-option" data-color="#E74C3C" style="background: #E74C3C;"></div>
+                        <div class="color-option" data-color="#9B59B6" style="background: #9B59B6;"></div>
+                    </div>
+                    <input type="color" id="customColor" class="custom-color" value="#FF6B35">
+                </div>
+
+                <!-- Actions -->
+                <div class="tool-section">
+                    <h4><i class="fas fa-cog"></i> Actions</h4>
+                    <button class="tool-button success" onclick="analyzePattern()">
+                        <i class="fas fa-search"></i> Analyze
+                    </button>
+                    <button class="tool-button info" onclick="savePattern()">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="tool-button warning" onclick="loadPattern()">
+                        <i class="fas fa-folder-open"></i> Load
+                    </button>
+                    <button class="tool-button danger" onclick="clearCanvas()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Center Panel - Canvas -->
+            <div class="center-panel">
+                <div class="canvas-header">
+                    <h3><i class="fas fa-paint-brush"></i> Drawing Canvas</h3>
+                    <div class="canvas-controls">
+                        <button class="control-btn" onclick="toggleGrid()" title="Toggle Grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="control-btn" onclick="zoomIn()" title="Zoom In">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="control-btn" onclick="zoomOut()" title="Zoom Out">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button class="control-btn" onclick="resetView()" title="Reset View">
+                            <i class="fas fa-home"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="kolamCanvas" width="800" height="600"></canvas>
+                    <div class="canvas-overlay" id="canvasOverlay">
+                        <div class="welcome-message">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <p>Click to draw or use AI generation tools</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-info">
+                    <span id="canvasInfo">Ready to create • Points: 0</span>
+                </div>
+            </div>
+
+            <!-- Right Panel - Analysis -->
+            <div class="right-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-chart-line"></i> Pattern Analysis</h3>
+                </div>
+                <div class="analysis-content" id="analysisContent">
+                    <div class="welcome-analysis">
+                        <div class="analysis-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>AI-Powered Analysis</h4>
+                        <p>Create a pattern to see detailed mathematical analysis including:</p>
+                        <ul>
+                            <li><i class="fas fa-sync"></i> Symmetry Detection</li>
+                            <li><i class="fas fa-calculator"></i> Complexity Scoring</li>
+                            <li><i class="fas fa-shapes"></i> Geometric Properties</li>
+                            <li><i class="fas fa-history"></i> Cultural Classification</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>Traditional Kolam Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="loadGalleryPattern('traditional1')">
+                    <div class="gallery-preview" data-pattern="traditional1"></div>
+                    <h4>Lotus Kolam</h4>
+                    <p>8-fold symmetry</p>
+                </div>
+                <div class="gallery-item" onclick="loadGalleryPattern('traditional2')">
+                    <div class="gallery-preview" data-pattern="traditional2"></div>
+                    <h4>Peacock Kolam</h4>
+                    <p>Bilateral symmetry</p>
+                </div>
+                <div class="gallery-item" onclick="loadGalleryPattern('geometric1')">
+                    <div class="gallery-preview" data-pattern="geometric1"></div>
+                    <h4>Geometric Mandala</h4>
+                    <p>12-fold symmetry</p>
+                </div>
+                <div class="gallery-item" onclick="loadGalleryPattern('modern1')">
+                    <div class="gallery-preview" data-pattern="modern1"></div>
+                    <h4>Modern Fusion</h4>
+                    <p>AI Generated</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Kolam Design Studio</h2>
+                    <p>Kolam Design Studio is an innovative platform that bridges traditional Indian art with modern technology. Our AI-powered tools help you understand the mathematical principles behind Kolam patterns while preserving cultural heritage.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-robot"></i>
+                            <h4>AI Pattern Generation</h4>
+                            <p>Generate authentic Kolam patterns using machine learning algorithms trained on traditional designs.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calculator"></i>
+                            <h4>Mathematical Analysis</h4>
+                            <p>Discover symmetries, geometric properties, and complexity scores of your designs.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-palette"></i>
+                            <h4>Interactive Design</h4>
+                            <p>Create beautiful Kolam patterns with intuitive drawing tools and real-time feedback.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="innovation-showcase">
+                        <h3>🚀 Smart India Hackathon Innovation</h3>
+                        <ul>
+                            <li>✨ AI-powered pattern recognition</li>
+                            <li>📱 Mobile-responsive design</li>
+                            <li>🎓 Educational geometry learning</li>
+                            <li>🌍 Cultural preservation platform</li>
+                            <li>🔄 Real-time collaboration</li>
+                            <li>📊 Advanced analytics dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Kolam Design Studio</h4>
+                    <p>Preserving tradition through innovation</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#about">About</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kolam Design Studio - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Generating AI Kolam...</p>
+        </div>
+    </div>
+
+    <!-- Modal for Analysis Results -->
+    <div id="analysisModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-chart-bar"></i> Pattern Analysis Results</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalAnalysisContent">
+                <!-- Analysis results will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

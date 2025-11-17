@@ -13,7 +13,7 @@ class KolamStudio {
         
         this.init();
     }
-    
+
     init() {
         this.setupCanvas();
         this.setupEventListeners();
@@ -1102,4 +1102,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+
 });

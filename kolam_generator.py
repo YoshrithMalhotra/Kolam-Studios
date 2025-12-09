@@ -7,7 +7,7 @@ import cv2
 from PIL import Image, ImageTk
 import json
 import math
-import random
+import random 
 from datetime import datetime
 
 class KolamDesignPrinciples:
@@ -633,4 +633,5 @@ def main():
         print(f"Error starting Kolam Studio: {e}")
 
 if __name__ == "__main__":
+
     main()

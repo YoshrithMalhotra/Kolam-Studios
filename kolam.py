@@ -11,7 +11,7 @@ from datetime import datetime
 class KolamMath:
     """Mathematical foundations for Kolam patterns"""
     
-    @staticmethod
+    @staticmethod 
     def create_dot_grid(rows, cols, spacing=1.0):
         """Create a grid of dots - foundation of Kolam"""
         dots = []
@@ -675,4 +675,5 @@ def main():
         messagebox.showerror("Error", f"Failed to start application: {e}")
 
 if __name__ == "__main__":
+
     main()

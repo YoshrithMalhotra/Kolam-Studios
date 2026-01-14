@@ -22,7 +22,7 @@ class KolamMath:
                 dots.append([x, y])
         return dots
     
-    @staticmethod
+    @staticmethod 
     def create_circle_pattern(center, radius, points=8):
         """Create circular patterns around dots"""
         pattern = []
@@ -677,3 +677,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
